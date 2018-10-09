@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<!-- s-content
+    ================================================== -->
+
+    <section class="s-content s-content--narrow s-content--no-padding-bottom">
+
+        <article class="row format-standard">
+
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                    {{ page.title }}
+                </h1>
+                <ul class="s-content__header-meta">
+                    <li class="date">{{ page.date }}</li>
+                    {% with categories=page.categories.all %}
+                      {% if categories %}
+
+                    <li class="cat">
+                        In
+                        {% for category in categories %}
+                        <a href="#0">{{ category.name }}</a>
+                        {% endfor %}
+                    </li>
+                    {% endif %}
+                  {% endwith %}
+                </ul>
+            </div> <!-- end s-content__header -->
+
+            <div class="s-content__media col-full">
+                <div class="s-content__post-thumb">
+                  {% for item in page.gallery_images.all %}
+
+                          {% image item.image max-1000x500 %}
+
+                  {% endfor %}
+                </div>
+            </div> <!-- end s-content__media -->
+
+            <div class="col-full s-content__main">
+              <p class="lead">{{ page.intro }}</p>
+                {{ page.body|richtext }}
+
+            </div>
+          </article>
+        </section>
+
+
+{% endblock %}
