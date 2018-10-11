@@ -3607,6 +3607,7 @@ footer h4::after {
  * ## content main
  * ------------------------------------------------------------------- */
 .s-content__main {
+   font-family: 'Raleway', sans-serif;
    margin-top: 6rem;
    padding-left: 6rem;
    padding-right: 6rem;

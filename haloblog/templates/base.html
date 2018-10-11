@@ -1,4 +1,4 @@
-{% load static wagtailuserbar %}
+{% load static wagtailcore_tags wagtailuserbar %}
 
 <!DOCTYPE html>
 <html class="no-js">
@@ -66,7 +66,7 @@
                         </a>
                     </div> <!-- end header__logo -->
 
-                    <ul class="header__social">
+                    <!-- <ul class="header__social">
                         <li>
                             <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                         </li>
@@ -79,7 +79,7 @@
                         <li>
                             <a href="#0"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
                         </li>
-                    </ul> <!-- end header__social -->
+                    </ul> --> <!-- end header__social -->
 
                     <a class="header__search-trigger" href="#0"></a>
 
@@ -106,35 +106,9 @@
 
                         <ul class="header__nav">
                             <li><a href="/" title="">Home</a></li>
-                            <li class="has-children">
-                                <a href="#0" title="">Startups</a>
-                                <ul class="sub-menu">
-                                <li><a href="#0">Lean Thinking</a></li>
-                                <li><a href="#0">Entrepreneurship</a></li>
-                                <li><a href="#0">Management</a></li>
-                                <li><a href="#0">Pitch</a></li>
-                                <li><a href="#0">Validated Learning</a></li>
-                                <li><a href="#0">Lessons</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-children">
-                                <a href="#0" title="">Programming</a>
-                                <ul class="sub-menu">
-                                <li><a href="#0">Python</a></li>
-                                <li><a href="#0">Django</a></li>
-                                <li><a href="#0">Postgres</a></li>
-                                <li><a href="#0">Java</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-children">
-                              <a href="#0" title="">Nepal</a>
-                              <ul class="sub-menu">
-                              <li><a href="#0">Startups</a></li>
-                              <li><a href="#0">DRR</a></li>
-                              <li><a href="#0">Projects</a></li>
-                              <li><a href="#0">News</a></li>
-                              </ul>
-                            </li>
+                            {% for nav_category in  CATEGORIES %}
+                              <li><a href="{% slugurl 'categories' %}?category={{ nav_category }}" title="">{{ nav_category }}</a></li>
+                            {% endfor %}
                             <li><a href="#0" title="">About</a></li>
                             <li><a href="#0" title="">Contact</a></li>
                         </ul> <!-- end header__nav -->
@@ -263,17 +237,9 @@
                     <h3>Tags</h3>
 
                     <div class="tagcloud">
-                        <a href="#0">Salad</a>
-                        <a href="#0">Recipe</a>
-                        <a href="#0">Places</a>
-                        <a href="#0">Tips</a>
-                        <a href="#0">Friends</a>
-                        <a href="#0">Travel</a>
-                        <a href="#0">Exercise</a>
-                        <a href="#0">Reading</a>
-                        <a href="#0">Running</a>
-                        <a href="#0">Self-Help</a>
-                        <a href="#0">Vacation</a>
+                      {% for tag in TAGS %}
+                        <a href="{% slugurl 'tags' %}?tag={{ tag.tag }}">{{ tag.tag }}</a>
+                      {% endfor %}
                     </div> <!-- end tagcloud -->
                 </div> <!-- end tags -->
             </div> <!-- end tags-wrap -->
@@ -292,17 +258,17 @@
                         <h4>Quick Links</h4>
 
                         <ul class="s-footer__linklist">
-                            <li><a href="#0">Home</a></li>
-                            <li><a href="#0">Blog</a></li>
-                            <li><a href="#0">Styles</a></li>
+                            <li><a href="/">Home</a></li>
+                            {% for nav_category in  CATEGORIES %}
+                              <li><a href="{% slugurl 'categories' %}?category={{ nav_category }}" title="">{{ nav_category }}</a></li>
+                            {% endfor %}
                             <li><a href="#0">About</a></li>
                             <li><a href="#0">Contact</a></li>
-                            <li><a href="#0">Privacy Policy</a></li>
                         </ul>
 
                     </div> <!-- end s-footer__sitelinks -->
 
-                    <div class="col-two md-four mob-full s-footer__archives">
+                    <!-- <div class="col-two md-four mob-full s-footer__archives">
 
                         <h4>Archives</h4>
 
@@ -315,9 +281,9 @@
                             <li><a href="#0">August 2017</a></li>
                         </ul>
 
-                    </div> <!-- end s-footer__archives -->
-
-                    <div class="col-two md-four mob-full s-footer__social">
+                    </div>  -->
+                    <!-- end s-footer__archives -->
+                    <!-- <div class="col-two md-four mob-full s-footer__social">
 
                         <h4>Social</h4>
 
@@ -330,13 +296,14 @@
                             <li><a href="#0">LinkedIn</a></li>
                         </ul>
 
-                    </div> <!-- end s-footer__social -->
+                    </div> -->
+                    <!-- end s-footer__social -->
 
                     <div class="col-five md-full end s-footer__subscribe">
 
                         <h4>Our Newsletter</h4>
 
-                        <p>Sit vel delectus amet officiis repudiandae est voluptatem. Tempora maxime provident nisi et fuga et enim exercitationem ipsam. Culpa consequatur occaecati.</p>
+                        <p>Subscribe to our newsletter for updates on new posts.</p>
 
                         <div class="subscribe-form">
                             <form id="mc-form" class="group" novalidate="true">
