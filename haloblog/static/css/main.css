@@ -1574,7 +1574,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .masonry .entry__meta-links a::after {
-   content: ", ";
+   content: " ";
 }
 
 .masonry .entry__meta-links a:last-child::after {

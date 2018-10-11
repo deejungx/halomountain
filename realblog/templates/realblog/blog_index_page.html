@@ -2,7 +2,9 @@
 
 {% load wagtailcore_tags wagtailimages_tags static %}
 
-{% block body_class %}template-blogindexpage{% endblock %}
+{% block body_class %}template-home{% endblock %}
+
+{% block homepageheader %}<section class="s-pageheader s-pageheader--home">{% endblock %}
 
 {% block featuredcontent %}
 <div class="pageheader-content row">
@@ -10,13 +12,24 @@
 
                 <div class="featured">
 
+                  {% for post in mainfeatured %}
+                    {% with post=post.specific %}
+
                     <div class="featured__column featured__column--big">
-                        <div class="entry" style="background-image:url('{% static "images/thumbs/featured/featured-guitarman.jpg" %}');">
+                      {% with post.main_image as main_image %}
+                        {% image main_image fill-900x900 as featured_image%}
+
+                        <div class="entry" style="background-image:url('{{ featured_image.url }}');">
 
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">Music</a></span>
-
-                                <h1><a href="#0" title="">What Your Music Preference Says About You and Your Personality.</a></h1>
+                              {% with categories=post.categories.all %}
+                                {% if categories %}
+                                  {% for category in categories %}
+                                <span class="entry__category"><a href="{% slugurl 'categories' %}?category={{ category }}">{{ category.name }}</a></span>
+                                  {% endfor %}
+                                {% endif %}
+                              {% endwith %}
+                                <h1><a href="{% pageurl post %}" title="">{{ post.title }}</a></h1>
 
                                 <div class="entry__info">
                                     <a href="#0" class="entry__profile-pic">
@@ -24,23 +37,40 @@
                                     </a>
 
                                     <ul class="entry__meta">
-                                        <li><a href="#0">John Doe</a></li>
-                                        <li>December 29, 2017</li>
+                                        <li><a href="#0">Author</a></li>
+                                        <li>{{ post.date }}</li>
                                     </ul>
                                 </div>
                             </div> <!-- end entry__content -->
 
                         </div> <!-- end entry -->
+                        {% endwith %}
                     </div> <!-- end featured__big -->
 
+                  {% endwith %}
+                {% endfor %}
+
+                {% for post in featuredpages %}
+                  {% with post=post.specific %}
                     <div class="featured__column featured__column--small">
 
-                        <div class="entry" style="background-image:url('{% static "images/thumbs/featured/featured-watch.jpg" %}');">
+
+                      {% with post.main_image as main_image %}
+                        {% image main_image fill-320x400 as featured_image%}
+                        <div class="entry" style="background-image:url('{{ featured_image.url }}');">
 
                             <div class="entry__content">
-                                <span class="entry__category"><a href="#0">Management</a></span>
 
-                                <h1><a href="#0" title="">The Pomodoro Technique Really Works.</a></h1>
+                              {% with categories=post.categories.all %}
+                                {% if categories %}
+                                  {% for category in categories %}
+                                <span class="entry__category"><a href="{% slugurl 'categories' %}?category={{ category }}">{{ category.name }}</a></span>
+                                  {% endfor %}
+                                {% endif %}
+                              {% endwith %}
+
+
+                                <h1><a href="{% pageurl post %}" title="">{{ post.title }}</a></h1>
 
                                 <div class="entry__info">
                                     <a href="#0" class="entry__profile-pic">
@@ -48,56 +78,79 @@
                                     </a>
 
                                     <ul class="entry__meta">
-                                        <li><a href="#0">John Doe</a></li>
-                                        <li>December 27, 2017</li>
+                                        <li><a href="#0">Author</a></li>
+                                        <li>{{ post.date }}</li>
                                     </ul>
                                 </div>
                             </div> <!-- end entry__content -->
 
-                        </div> <!-- end entry -->
-
-                        <div class="entry" style="background-image:url('{% static "images/thumbs/featured/featured-beetle.jpg" %}');">
-
-                            <div class="entry__content">
-                                <span class="entry__category"><a href="#0">LifeStyle</a></span>
-
-                                <h1><a href="#0" title="">Throwback To The Good Old Days.</a></h1>
-
-                                <div class="entry__info">
-                                    <a href="#0" class="entry__profile-pic">
-                                        <img class="avatar" src="{% static "images/avatars/user-03.jpg" %}" alt="">
-                                    </a>
-
-                                    <ul class="entry__meta">
-                                        <li><a href="#0">John Doe</a></li>
-                                        <li>December 21, 2017</li>
-                                    </ul>
-                                </div>
-                            </div> <!-- end entry__content -->
 
                         </div> <!-- end entry -->
-
+                        {% endwith %}
                     </div> <!-- end featured__small -->
+                    {% endwith %}
+                  {% endfor %}
                 </div> <!-- end featured -->
 
             </div> <!-- end col-full -->
         </div> <!-- end pageheader-content row -->
 {% endblock %}
 
+{% block homepageheaderend %}</section>{% endblock %}
+
 
 {% block content %}
 
-    {% for post in blogpages %}
-      {% with post=post.specific %}
-          <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+<section class="s-content">
 
-          {% with post.main_image as main_image %}
-              {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
+    <div class="row masonry-wrap">
+        <div class="masonry">
+
+            <div class="grid-sizer"></div>
+
+            {% for post in blogpages %}
+              {% with post=post.specific %}
+
+            <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+                <div class="entry__thumb">
+                    <a href="{% pageurl post %}" class="entry__thumb-link">
+                      {% with post.main_image as main_image %}
+                        {% image main_image fill-320x400 %}
+                        {% endwith %}
+                    </a>
+                </div>
+
+                <div class="entry__text">
+                    <div class="entry__header">
+
+                        <div class="entry__date">
+                            <a href="{% pageurl post %}">{{ post.date }}</a>
+                        </div>
+                        <h1 class="entry__title"><a href="{% pageurl post %}">{{ post.title }}</a></h1>
+
+                    </div>
+                    <div class="entry__excerpt">
+                        <p>
+                            {{ post.intro }}</p>
+                    </div>
+                    {% if post.tags.all.count %}
+                    <div class="entry__meta">
+                        <span class="entry__meta-links">
+                          {% for tag in post.tags.all %}
+                            <a href="{% slugurl 'tags' %}?tag={{ tag }}">#{{ tag }}</a>
+                          {% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+
+            </article> <!-- end article -->
+
           {% endwith %}
-
-          <p>{{ post.intro }}</p>
-          {{ post.body|richtext }}
-      {% endwith %}
-    {% endfor %}
-
+        {% endfor %}
+      </div>
+      </div>
+      </div>
+    </section>
 {% endblock %}

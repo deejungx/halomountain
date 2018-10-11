@@ -124,13 +124,15 @@
                         <p>
                             {{ post.intro }}</p>
                     </div>
+                    {% if post.tags.all.count %}
                     <div class="entry__meta">
                         <span class="entry__meta-links">
-
-                            <a href="category.html">Python</a>
-
+                          {% for tag in post.tags.all %}
+                            <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
+                          {% endfor %}
                         </span>
                     </div>
+                    {% endif %}
                 </div>
 
             </article> <!-- end article -->

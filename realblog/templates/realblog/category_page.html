@@ -2,13 +2,12 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block title_suffix %}
-  {% if request.GET.tag|length %}
-    {{ request.GET.tag }}
+  {% if request.GET.category|length %}
+    {{ request.GET.category }}
   {% else %}
     Not Found
   {% endif %}
 {% endblock %}
-
 {% block content %}
 
 <!-- s-content
@@ -17,10 +16,10 @@
 
   <div class="row narrow">
       <div class="col-full s-content__header" data-aos="fade-up">
-        {% if request.GET.tag|length %}
-          <h1>Tag: {{ request.GET.tag }}</h1>
+        {% if request.GET.category|length %}
+          <h1>Category: {{ request.GET.category }}</h1>
 
-          <p class="lead">We have the following posts tagged as  <strong>{{ request.GET.tag }}.</strong></p>
+          <p class="lead">We have the following posts related to <strong>{{ request.GET.category }}.</strong></p>
           {% else %}
             <h1>Uh oh..</h1>
             <p class="lead">We couldn't find the posts that You were looking for.</p>

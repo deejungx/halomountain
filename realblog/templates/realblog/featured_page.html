@@ -1,14 +1,6 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
 
-{% block title_suffix %}
-  {% if request.GET.tag|length %}
-    {{ request.GET.tag }}
-  {% else %}
-    Not Found
-  {% endif %}
-{% endblock %}
-
 {% block content %}
 
 <!-- s-content
@@ -17,13 +9,12 @@
 
   <div class="row narrow">
       <div class="col-full s-content__header" data-aos="fade-up">
-        {% if request.GET.tag|length %}
-          <h1>Tag: {{ request.GET.tag }}</h1>
-
-          <p class="lead">We have the following posts tagged as  <strong>{{ request.GET.tag }}.</strong></p>
-          {% else %}
+        <h1>Featured Posts</h1>
+        {% if featuredpages.all.count %}
+          <p class="lead">Here are some of our currently featured posts.</strong></p>
+        {% else %}
             <h1>Uh oh..</h1>
-            <p class="lead">We couldn't find the posts that You were looking for.</p>
+            <p class="lead">We don't have anything featured right now.</p>
         {% endif %}
       </div>
   </div>
@@ -33,7 +24,9 @@
 
           <div class="grid-sizer"></div>
 
-          {% for blogpage in blogpages %}
+  {# Main Featured Posts #}
+
+          {% for blogpage in mainfeatured %}
 
           <article class="masonry__brick entry format-standard" data-aos="fade-up">
 
@@ -63,6 +56,49 @@
                   <div class="entry__meta">
                       <span class="entry__meta-links">
                         {% for tag in blogpage.tags.all %}
+                          <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
+                        {% endfor %}
+                      </span>
+                  </div>
+                  {% endif %}
+              </div>
+
+          </article> <!-- end article -->
+
+          {% endfor %}
+
+{# Remaining Featured Posts #}
+
+          {% for featpage in featuredpages %}
+
+          <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+              <div class="entry__thumb">
+                  <a href="{% pageurl featpage %}" class="entry__thumb-link">
+                    {% with featpage.main_image as main_image %}
+                      {% image main_image fill-320x400 %}
+                      {% endwith %}
+                  </a>
+              </div>
+
+              <div class="entry__text">
+                  <div class="entry__header">
+
+                      <div class="entry__date">
+                          <a href="{% pageurl featpage %}">{{ featpage.latest_revision_created_at }}</a>
+                      </div>
+                      <h1 class="entry__title"><a href="{% pageurl featpage %}">{{ featpage.title }}</a></h1>
+
+                  </div>
+                  <div class="entry__excerpt">
+                      <p>
+                          {{ featpage.intro }}
+                      </p>
+                  </div>
+                  {% if featpage.tags.all.count %}
+                  <div class="entry__meta">
+                      <span class="entry__meta-links">
+                        {% for tag in featpage.tags.all %}
                           <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
                         {% endfor %}
                       </span>

@@ -47,7 +47,11 @@ class BlogIndexPage(Page):
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super().get_context(request)
-        blogpages = self.get_children().live().order_by('-first_published_at')
+        blogpages = self.get_children().live().order_by('-first_published_at').type(BlogPage)
+        mainfeatured = BlogPage.objects.live().filter(tags__name='main').order_by('-first_published_at')[:1]
+        featuredpages = BlogPage.objects.live().filter(tags__name='featured').order_by('-first_published_at')[:2]
+        context['featuredpages'] = featuredpages
+        context['mainfeatured'] = mainfeatured
         context['blogpages'] = blogpages
         return context
 
@@ -79,7 +83,7 @@ class BlogPage(Page):
             FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Blog information"),
         FieldPanel('intro'),
-        FieldPanel('body'),
+        FieldPanel('body', classname="full"),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
 
@@ -107,6 +111,30 @@ class BlogTagIndexPage(Page):
         tag = request.GET.get('tag')
         blogpages = BlogPage.objects.filter(tags__name=tag)
 
+        # Update template context
+        context = super().get_context(request)
+        context['blogpages'] = blogpages
+        return context
+
+
+class FeaturedPage(Page):
+
+    def get_context(self, request):
+        mainfeatured = BlogPage.objects.live().filter(tags__name='main').order_by('-first_published_at')[:1]
+        featuredpages = BlogPage.objects.live().filter(tags__name='featured').order_by('-first_published_at')[:2]
+        context = super().get_context(request)
+        context['featuredpages'] = featuredpages
+        context['mainfeatured'] = mainfeatured
+        return context
+
+
+# Category page
+class CategoryPage(Page):
+
+    def get_context(self, request):
+        # Filter by Category
+        category = request.GET.get('category')
+        blogpages = BlogPage.objects.filter(categories__name=category)
         # Update template context
         context = super().get_context(request)
         context['blogpages'] = blogpages

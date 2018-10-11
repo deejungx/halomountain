@@ -25,7 +25,7 @@
                     <li class="cat">
                         In
                         {% for category in categories %}
-                        <a href="#0">{{ category.name }}</a>
+                        <a href="{% slugurl 'categories' %}?category={{ category }}">{{ category.name }}</a>
                         {% endfor %}
                     </li>
                     {% endif %}
@@ -35,17 +35,24 @@
 
             <div class="s-content__media col-full">
                 <div class="s-content__post-thumb">
-                  {% for item in page.gallery_images.all %}
-
-                          {% image item.image max-1000x500 %}
-
-                  {% endfor %}
+                          {% image page.main_image max-1000x500 %}
                 </div>
             </div> <!-- end s-content__media -->
 
             <div class="col-full s-content__main">
               <p class="lead">{{ page.intro }}</p>
                 {{ page.body|richtext }}
+
+                {% if page.tags.all.count %}
+                <p class="s-content__tags">
+                  <span>Related Tags</span>
+                  <span class="s-content__tag-list">
+                    {% for tag in page.tags.all %}
+                      <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
+                    {% endfor %}
+                  </span>
+              </p> <!-- end s-content__tags -->
+              {% endif %}
 
             </div>
           </article>
