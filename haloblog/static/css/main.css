@@ -1912,7 +1912,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .header__search-form input[type="search"] {
    background-color: transparent;
-   color: #000000;
+   color: #FFF000;
    height: auto;
    width: 100%;
    font-family: "metropolis-semibold", sans-serif;
@@ -3607,7 +3607,6 @@ footer h4::after {
  * ## content main
  * ------------------------------------------------------------------- */
 .s-content__main {
-   font-family: 'Raleway', sans-serif;
    margin-top: 6rem;
    padding-left: 6rem;
    padding-right: 6rem;

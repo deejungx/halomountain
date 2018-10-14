@@ -20,7 +20,6 @@ class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey(
         'BlogPage',
         related_name='tagged_items',
-        on_delete=models.CASCADE
     )
 
 
@@ -83,9 +82,11 @@ class BlogPage(Page):
             FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Blog information"),
         FieldPanel('intro'),
-        FieldPanel('body', classname="full"),
+        FieldPanel('body'),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
+
+    parent_page_types = [BlogIndexPage, ]
 
 
 # Image gallery
