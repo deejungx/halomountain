@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-aboutpage{% endblock %}
+
+{% block content %}
+
+<section class="s-content s-content--narrow">
+
+        <div class="row">
+
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                    About Us
+                </h1>
+            </div> <!-- end s-content__header -->
+
+            <div class="col-full s-content__main">
+
+                <p class="lead">{{ page.intro }}</p>
+
+                {{ page.description | richtext }}
+
+
+            </div> <!-- end s-content__main -->
+
+        </div> <!-- end row -->
+
+    </section> <!-- s-content -->
+
+
+{% endblock %}

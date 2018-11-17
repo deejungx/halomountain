@@ -4,14 +4,16 @@ from django import forms
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-
+from wagtail.core import blocks
 from wagtail.core.models import Page, Orderable
-from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from wagtail.search import index
 
+from wagtailcodeblock.blocks import CodeBlock
+from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.models import register_snippet
 
 
@@ -59,7 +61,20 @@ class BlogIndexPage(Page):
 class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
-    body = RichTextField(blank=True)
+    body = StreamField([
+        ('first_paragraph', blocks.CharBlock()),
+        ('pullquotes', blocks.CharBlock()),
+        ('blockquotes', blocks.StructBlock([
+            ('quote', blocks.CharBlock()),
+            ('cite', blocks.CharBlock()),
+            ('cite_link', blocks.URLBlock(required=False)),
+        ], template='blocks/bquote.html')),
+        ('image', ImageChooserBlock()),
+        ('list', blocks.ListBlock(blocks.CharBlock())),
+        ('paragraph', blocks.RichTextBlock()),
+        ('code', CodeBlock()),
+        ('raw_html', blocks.RawHTMLBlock()),
+    ])
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = ParentalManyToManyField('realblog.BlogCategory', blank=True)
 
@@ -82,7 +97,7 @@ class BlogPage(Page):
             FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading="Blog information"),
         FieldPanel('intro'),
-        FieldPanel('body'),
+        StreamFieldPanel('body'),
         InlinePanel('gallery_images', label="Gallery images"),
     ]
 
@@ -140,3 +155,13 @@ class CategoryPage(Page):
         context = super().get_context(request)
         context['blogpages'] = blogpages
         return context
+
+
+class AboutPage(Page):
+    intro = models.CharField(max_length=300)
+    description = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel('intro'),
+        FieldPanel('description', classname='full'),
+    ]

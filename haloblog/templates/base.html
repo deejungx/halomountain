@@ -62,7 +62,7 @@
 
                     <div class="header__logo">
                         <a class="logo" href="/">
-                            <img src="{% static "images/logo.png" %}" alt="Homepage">
+                             <img src="{% static "images/logo.png" %}" alt="Homepage">
                         </a>
                     </div> <!-- end header__logo -->
 
@@ -85,10 +85,10 @@
 
                     <div class="header__search">
 
-                        <form role="search" method="get" class="header__search-form" action="#">
+                        <form role="search" method="get" class="header__search-form" action="{% url 'search' %}">
                             <label>
                                 <span class="hide-content">Search for:</span>
-                                <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
+                                <input type="search" class="search-field" placeholder="Type Keywords" value="{{ search_query }}" name="query" title="Search for:" autocomplete="off">
                             </label>
                             <input type="submit" class="search-submit" value="Search">
                         </form>
@@ -109,8 +109,8 @@
                             {% for nav_category in  CATEGORIES %}
                               <li><a href="{% slugurl 'categories' %}?category={{ nav_category }}" title="">{{ nav_category }}</a></li>
                             {% endfor %}
-                            <li><a href="#0" title="">About</a></li>
-                            <li><a href="#0" title="">Contact</a></li>
+                            <li><a href="{% slugurl 'about' %}" title="">About</a></li>
+
                         </ul> <!-- end header__nav -->
 
                         <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
@@ -138,99 +138,7 @@
         ================================================== -->
         <section class="s-extra">
 
-            <div class="row top">
 
-                <div class="col-eight md-six tab-full popular">
-                    <h3>Popular</h3>
-
-                    <div class="block-1-2 block-m-full popular__posts">
-                        <article class="col-block popular__post">
-                            <a href="#0" class="popular__thumb">
-                                <img src="{% static "images/thumbs/small/wheel-150.jpg"%}" alt="">
-                            </a>
-                            <h5><a href="#0">Visiting Theme Parks Improves Your Health.</a></h5>
-                            <section class="popular__meta">
-                                    <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                                <span class="popular__date"><span>on</span> <time datetime="2017-12-19">Dec 19, 2017</time></span>
-                            </section>
-                        </article>
-                        <article class="col-block popular__post">
-                            <a href="#0" class="popular__thumb">
-                                <img src="{% static "images/thumbs/small/shutterbug-150.jpg"%}" alt="">
-                            </a>
-                            <h5><a href="#0">Key Benefits Of Family Photography.</a></h5>
-                            <section class="popular__meta">
-                                <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                                <span class="popular__date"><span>on</span> <time datetime="2017-12-18">Dec 18, 2017</time></span>
-                            </section>
-                        </article>
-                        <article class="col-block popular__post">
-                            <a href="#0" class="popular__thumb">
-                                <img src="{% static "images/thumbs/small/cookies-150.jpg"%}" alt="">
-                            </a>
-                            <h5><a href="#0">Absolutely No Sugar Oatmeal Cookies.</a></h5>
-                            <section class="popular__meta">
-                                    <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                                <span class="popular__date"><span>on</span> <time datetime="2017-12-16">Dec 16, 2017</time></span>
-                            </section>
-                        </article>
-                        <article class="col-block popular__post">
-                            <a href="#0" class="popular__thumb">
-                                <img src="{% static "images/thumbs/small/beetle-150.jpg"%}" alt="">
-                            </a>
-                            <h5><a href="#0">Throwback To The Good Old Days.</a></h5>
-                            <section class="popular__meta">
-                                <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                                <span class="popular__date"><span>on</span> <time datetime="2017-12-16">Dec 16, 2017</time></span>
-                            </section>
-                        </article>
-                        <article class="col-block popular__post">
-                            <a href="#0" class="popular__thumb">
-                                <img src="{% static "images/thumbs/small/tulips-150.jpg"%}" alt="">
-                            </a>
-                            <h5><a href="#0">10 Interesting Facts About Caffeine.</a></h5>
-                            <section class="popular__meta">
-                                <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                                <span class="popular__date"><span>on</span> <time datetime="2017-12-14">Dec 14, 2017</time></span>
-                            </section>
-                        </article>
-                        <article class="col-block popular__post">
-                            <a href="#0" class="popular__thumb">
-                                <img src="{% static "images/thumbs/small/salad-150.jpg"%}" alt="">
-                            </a>
-                            <h5><a href="#0">Healthy Mediterranean Salad Recipes</a></h5>
-                            <section class="popular__meta">
-                                <span class="popular__author"><span>By</span> <a href="#0"> John Doe</a></span>
-                                <span class="popular__date"><span>on</span> <time datetime="2017-12-12">Dec 12, 2017</time></span>
-                            </section>
-                        </article>
-                    </div> <!-- end popular_posts -->
-                </div> <!-- end popular -->
-
-                <div class="col-four md-six tab-full about">
-                    <h3>About Halo Mountain</h3>
-
-                    <p>
-                    Donec sollicitudin molestie malesuada. Nulla quis lorem ut libero malesuada feugiat. Pellentesque in ipsum id orci porta dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Donec sollicitudin molestie malesuada.
-                    </p>
-
-                    <ul class="about__social">
-                        <li>
-                            <a href="#0"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="#0"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="#0"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a href="#0"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                        </li>
-                    </ul> <!-- end header__social -->
-                </div> <!-- end about -->
-
-            </div> <!-- end row -->
 
             <div class="row bottom tags-wrap">
                 <div class="col-full tags">
@@ -262,27 +170,13 @@
                             {% for nav_category in  CATEGORIES %}
                               <li><a href="{% slugurl 'categories' %}?category={{ nav_category }}" title="">{{ nav_category }}</a></li>
                             {% endfor %}
-                            <li><a href="#0">About</a></li>
+                            <li><a href="{% slugurl 'about' %}">About</a></li>
                             <li><a href="#0">Contact</a></li>
                         </ul>
 
                     </div> <!-- end s-footer__sitelinks -->
 
-                    <!-- <div class="col-two md-four mob-full s-footer__archives">
 
-                        <h4>Archives</h4>
-
-                        <ul class="s-footer__linklist">
-                            <li><a href="#0">January 2018</a></li>
-                            <li><a href="#0">December 2017</a></li>
-                            <li><a href="#0">November 2017</a></li>
-                            <li><a href="#0">October 2017</a></li>
-                            <li><a href="#0">September 2017</a></li>
-                            <li><a href="#0">August 2017</a></li>
-                        </ul>
-
-                    </div>  -->
-                    <!-- end s-footer__archives -->
                     <!-- <div class="col-two md-four mob-full s-footer__social">
 
                         <h4>Social</h4>
@@ -306,16 +200,22 @@
                         <p>Subscribe to our newsletter for updates on new posts.</p>
 
                         <div class="subscribe-form">
-                          
-                            <form id="mc-form" class="group" novalidate="true">
 
-                                <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
+                            <form action="https://halo-mountain.us19.list-manage.com/subscribe/post?u=6f7c8f44fa9898cb7eb235bed&amp;id=d47346fbde" method="post" id="mc-embedded-subscribe-form"  name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 
-                                <input type="submit" name="subscribe" value="Send">
+                                <input type="email" value="" name="EMAIL" class=" required email" id="mce-email" placeholder="Email Address" required="">
+
+                                <div id="mce-responses" class="clear">
+                              		<div class="response" id="mce-error-response" style="display:none"></div>
+                              		<div class="response" id="mce-success-response" style="display:none"></div>
+                              	</div>
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_6f7c8f44fa9898cb7eb235bed_d47346fbde" tabindex="-1" value=""></div>
+                                <input type="submit" name="subscribe" value="Subscribe" id="mc-embedded-subscribe">
 
                                 <label for="mc-email" class="subscribe-message"></label>
 
                             </form>
+
                         </div>
 
                     </div> <!-- end s-footer__subscribe -->

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'realblog',
+    'wagtailcodeblock',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,27 @@ WAGTAIL_SITE_NAME = "haloblog"
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.search.backends.db',
+        'AUTO_UPDATE': False,
+    }
+}
+
+# Wagtail Code Blocks language setting
+WAGTAIL_CODE_BLOCK_LANGUAGES = (
+    ('bash', 'Bash/Shell'),
+    ('css', 'CSS'),
+    ('diff', 'diff'),
+    ('html', 'HTML'),
+    ('javascript', 'Javascript'),
+    ('json', 'JSON'),
+    ('python', 'Python'),
+    ('django', 'Django/Jinja2'),
+    ('docker', 'Docker'),
+    ('scss', 'SCSS'),
+    ('yaml', 'YAML'),
+)
+
+WAGTAIL_CODE_BLOCK_THEME = 'coy'

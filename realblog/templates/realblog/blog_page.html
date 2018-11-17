@@ -41,7 +41,29 @@
 
             <div class="col-full s-content__main">
               <p class="lead">{{ page.intro }}</p>
-                {{ page.body|richtext }}
+              {% for block in page.body %}
+                {% if block.block_type == 'first_paragraph' %}
+                    <p class="drop-cap">{{block}}</p>
+                {% elif block.block_type == 'pullquotes' %}
+                      <aside class="pull-quote">
+                          <blockquote>
+                          <p>{{ block }}</p>
+                          </blockquote>
+                      </aside>
+                {% elif block.block_type == 'blockquotes' %}
+                    {{ block }}
+                {% elif block.block_type == 'code' %}
+                    {{ block }}
+                {% elif block.block_type == 'image' %}
+                    {{ block }}
+                {% elif block.block_type == 'list' %}
+                    {{ block }}
+                {% elif block.block_type == 'raw_html' %}
+                    {{ block }}
+                {% else %}
+                    {% include_block block %}
+                {% endif %}
+              {% endfor %}
 
                 {% if page.tags.all.count %}
                 <p class="s-content__tags">

@@ -2,12 +2,13 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block title_suffix %}
-  {% if request.GET.category|length %}
-    {{ request.GET.category }}
+  {% if search_results %}
+    Search | {{ request.GET.query }}
   {% else %}
     Not Found
   {% endif %}
 {% endblock %}
+
 {% block content %}
 
 <!-- s-content
@@ -16,10 +17,10 @@
 
   <div class="row narrow">
       <div class="col-full s-content__header" data-aos="fade-up">
-        {% if request.GET.category|length %}
-          <h1>{{ request.GET.category }}</h1>
+        {% if search_results %}
+          <h1>Search : {{ request.GET.query }}</h1>
 
-          <p class="lead">We have the following posts related to <strong>{{ request.GET.category }}</strong>.</p>
+          <p class="lead">We have the following posts related to <strong>{{ request.GET.query }}</strong>.</p>
           {% else %}
             <h1>Uh oh..</h1>
             <p class="lead">We couldn't find the posts that you were looking for.</p>
@@ -32,8 +33,8 @@
 
           <div class="grid-sizer"></div>
 
-          {% for blogpage in blogpages %}
-
+          {% for blogpage in search_results %}
+          {% with blogpage.specific as blogpage %}
           <article class="masonry__brick entry format-standard" data-aos="fade-up">
 
               <div class="entry__thumb">
@@ -70,7 +71,7 @@
               </div>
 
           </article> <!-- end article -->
-
+          {% endwith %}
           {% endfor %}
         </div>
       </div>
