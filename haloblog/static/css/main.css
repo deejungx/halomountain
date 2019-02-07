@@ -1798,7 +1798,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 .header__logo img {
    width: 265px;
-   height: 48px;
+   height: 30px;
 }
 
 
@@ -2029,7 +2029,7 @@ body.search-is-visible {
 @media only screen and (max-width:900px) {
    .header__logo img {
       width: 250px;
-      height: 45px;
+      height: 30px;
    }
 
 }
@@ -2049,7 +2049,7 @@ body.search-is-visible {
 
    .header__logo img {
       width: 225px;
-      height: 40px;
+      height: 25px;
    }
 
    .header__social {
@@ -2089,7 +2089,7 @@ body.search-is-visible {
 
    .header__logo img {
       width: 200px;
-      height: 36px;
+      height: 20px;
    }
 
    .header__toggle-menu {
@@ -2117,7 +2117,7 @@ body.search-is-visible {
 
    .header__logo img {
       width: 160px;
-      height: 29px;
+      height: 15px;
    }
 
    .header__toggle-menu {
