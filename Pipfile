@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "==2.2.10"
+django = "==2.2.13"
 wagtail = "==2.7.2"
 wagtailcodeblock = "==1.14.0.0"
 gunicorn = "*"
