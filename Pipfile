@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 django = "==2.2.13"
-wagtail = "==2.7.2"
+wagtail = "==2.7.4"
 wagtailcodeblock = "==1.14.0.0"
 gunicorn = "*"
 
